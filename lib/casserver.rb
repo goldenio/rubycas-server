@@ -2,6 +2,7 @@ module CASServer; end
 
 require 'active_record'
 require 'active_support'
+require 'active_record/deprecated_finders'
 require 'sinatra/base'
 require 'builder' # for XML views
 require 'logger'

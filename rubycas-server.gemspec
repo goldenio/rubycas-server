@@ -26,10 +26,10 @@ $gemspec = Gem::Specification.new do |s|
   s.has_rdoc = true
   s.post_install_message = "For more information on RubyCAS-Server, see http://rubycas.github.com"
 
-  s.add_dependency("activerecord", ">= 2.3.12", "< 4.0")
-  s.add_dependency("activesupport", ">= 2.3.12", "< 4.0")
+  s.add_dependency("activerecord", ">= 4.2.6", "< 5.0")
+  s.add_dependency("activesupport", ">= 4.2.6", "< 5.0")
   s.add_dependency("sinatra", "~> 1.0")
-  s.add_dependency("sinatra-r18n", '~> 1.1.0')
+  s.add_dependency("sinatra-r18n", '~> 2.0')
   s.add_dependency("crypt-isaac", "~> 0.9.1")
 
   s.add_development_dependency("rack-test")
