@@ -1,0 +1,52 @@
+# Ignore files of Docker
+.dockerignore
+docker-compose.*
+Dockerfile*
+docker/*
+!/docker/docker-entrypoint*
+!docker/.netrc
+!docker/.gitconfig
+!docker/.git-credentials
+!docker/config.yml
+
+# Ignore files of git
+.git
+.gitignore
+.gitattributes
+
+# Ignore files of yarn
+yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore files of bundler
+.bundle
+.bundleignore
+vendor/bundle/*
+
+# Ignore files of rspec
+.rspec
+coverage/*
+
+# Ignore files of capistrano
+config/deploy
+config/deploy.rb
+
+# Ignore files of CI/CD
+.github/
+
+# Ignore files of Mac OS
+.DS_Store
+
+# Ignore files of application favors
+!config/config.yml
+gemfiles
+log/*
+!log/.gitignore
+resources
+spec
+.env*
+Appraisals
+CHANGELOG
+Guardfile
+rubycas-server.gemspec

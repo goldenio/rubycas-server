@@ -19,3 +19,5 @@ resources/dev
 .vagrant
 Vagrantfile
 !Gemfile.lock
+!/docker/*
+/docker/.env

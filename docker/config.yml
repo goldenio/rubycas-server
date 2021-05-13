@@ -1,0 +1,82 @@
+##### SERVER SETUP ################################################################
+
+server: webrick
+port: 3000
+
+# port: 443
+# ssl_cert: /path/to/your/ssl.pem
+# ssl_key: /path/to/your/private_key.pem
+
+# uri_path: /cas
+
+# bind_address: 0.0.0.0
+
+##### DATABASE #################################################################
+
+database:
+  adapter: mysql2
+  host: cas-mysql
+  username: root
+  password: mysql
+  database: casserver
+  reconnect: true
+  # pool: 5
+
+# disable_auto_migrations: true
+
+##### AUTHENTICATION ###########################################################
+
+authenticator:
+  class: CASServer::Authenticators::SQLBcrypt
+  database:
+    adapter: mysql2
+    host: sbis-mysql
+    username: root
+    password: mysql
+    database: casserver
+  user_table: users
+  username_column: email
+  password_column: encrypted_password
+
+##### LOOK & FEEL ##############################################################
+
+theme: simple
+
+organization: CAS
+
+infoline: Powered by <a href="http://rubycas.github.com">RubyCAS-Server</a>
+
+# custom_views: /path/to/custom/views
+
+# public_dir: /path/to/custom/public
+
+##### LOCALIZATION (L10N) #######################################################
+
+
+##### LOGGING ##################################################################
+
+log:
+  file: /srv/cas/log/casserver.log
+  level: INFO
+
+# db_log:
+#   file: /var/log/casserver_db.log
+
+# quiet: true
+
+##### SINGLE SIGN-OUT ##########################################################
+
+enable_single_sign_out: true
+
+##### OTHER ####################################################################
+
+# maximum_unused_login_ticket_lifetime: 300
+# maximum_unused_service_ticket_lifetime: 300
+
+# maximum_session_lifetime: 172800
+
+# downcase_username: true
+
+# allowed_service_ips:
+#  - 127.0.0.1
+#  - 192.168.0.0/24
