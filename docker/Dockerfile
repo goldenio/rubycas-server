@@ -2,7 +2,9 @@
 # FROM ruby:3.0.0-alpine3.13 AS ruby_base
 # FROM ruby:2.7.2-alpine3.13 AS ruby_base
 # FROM ruby:2.6.6-alpine3.13 AS ruby_base
-FROM ruby:2.5.8-alpine3.13 AS ruby_base
+ARG registry_uri=""
+
+FROM ${registry_uri}ruby:2.5.8-alpine3.13 AS ruby_base
 
 ARG tz="Asia/Taipei"
 

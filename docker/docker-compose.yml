@@ -12,6 +12,7 @@ x-images:
         bundle_without:
         extra_packages:
         files_to_remove:
+        registry_uri: ${REGISTRY_URI}
 
   prd_image: &prd_image
     image: ${REGISTRY_URI}${PRD_IMAGE_NAME}:${PRD_IMAGE_TAG:-latest}
@@ -24,6 +25,7 @@ x-images:
         bundle_without: development:test
         extra_packages: mysql-dev=~10.5 mysql-client=~10.5
         files_to_remove:
+        registry_uri: ${REGISTRY_URI}
 
 x-bases:
   dev_base: &dev_base
