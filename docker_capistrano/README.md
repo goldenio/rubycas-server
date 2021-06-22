@@ -88,3 +88,30 @@ cd docker_capistrano
 bundle exec cap production docker:push_image
 bundle exec cap production docker:pull_image
 ```
+
+## Dockerize Self
+
+build and run with docker-compose
+
+``` shell
+docker-compose --env-file .env config
+docker-compose --env-file .env build runner
+docker-compose --env-file .env run --rm runner
+docker-compose --env-file .env push runner
+docker-compose --env-file .env pull runner
+```
+
+build and run with docker
+
+``` shell
+cd docker_capistrano
+docker build -t capistrano/ruby_cas:0.1.0 \
+             -f ./Dockerfile \
+             --target ruby_runner \
+             .
+docker run --name capistrano_ruby_cas \
+           -v ./compose_projects:/docker_capistrano/compose_projects
+           -v ./config/deploy:/docker_capistrano/config/deploy
+           -t -i --rm \
+           capistrano/ruby_cas:0.1.0
+```

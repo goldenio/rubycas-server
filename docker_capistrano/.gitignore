@@ -2,3 +2,4 @@ compose_projects/*
 !compose_projects/.keep
 log
 vendor
+.env

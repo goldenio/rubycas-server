@@ -1,0 +1,33 @@
+version: '3.9'
+
+x-images:
+  runner_image: &runner_image
+    image: ${REGISTRY_URI}${IMAGE_NAME}:${IMAGE_TAG:-latest}
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      target: ruby_runner
+      args:
+        registry_uri: ${REGISTRY_URI}
+
+x-bases:
+  runner_base: &runner_base
+    <<: *runner_image
+    stdin_open: true
+    tty: true
+    environment:
+      EDITOR: vi
+    volumes:
+      # - .:/docker_capistrano # For develop only
+      - ./compose_projects:/docker_capistrano/compose_projects
+      - ./config/deploy:/docker_capistrano/config/deploy
+
+services:
+  runner:
+    <<: *runner_base
+    command: sh
+    networks:
+      - default
+
+networks:
+  default:

@@ -1,0 +1,29 @@
+# Ignore files of Docker
+.dockerignore
+docker-compose.*
+Dockerfile*
+
+# Ignore files of git
+.git
+.gitignore
+.gitattributes
+
+# Ignore files of bundler
+.bundle
+.bundleignore
+vendor/bundle/*
+
+# Ignore files of CI/CD
+.github/
+
+# Ignore files of Mac OS
+.DS_Store
+
+# Ignore files of application favors
+compose_projects/*
+!compose_projects/.keep
+config/deploy/*
+!config/deploy/.keep
+log/*
+vendor
+.env*
