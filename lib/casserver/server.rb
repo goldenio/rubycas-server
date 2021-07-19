@@ -532,9 +532,9 @@ module CASServer
             st.destroy
           end
 
-          pgts = CASServer::Model::ProxyGrantingTicket.find(:all,
-            :conditions => [CASServer::Model::ServiceTicket.quoted_table_name+".username = ?", tgt.username],
-            :include => :service_ticket)
+          pgts = CASServer::Model::ProxyGrantingTicket.joins(:service_ticket)
+            .where([CASServer::Model::ServiceTicket.quoted_table_name+".username = ?", tgt.username])
+            .to_a
           pgts.each do |pgt|
             $LOG.debug("Deleting Proxy-Granting Ticket '#{pgt}' for user '#{pgt.service_ticket.username}'")
             pgt.destroy
