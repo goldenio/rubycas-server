@@ -45,8 +45,8 @@ x-bases:
   prd_base: &prd_base
     <<: *prd_image
     volumes:
-      - ../config/config.yml:/srv/cas/config/config.yml
-      - ../log/casserver.log:/srv/cas/log/casserver.log
+      - ${DEPLOY_SHARED_PATH}/config/config.yml:/srv/cas/config/config.yml
+      - ${DEPLOY_SHARED_PATH}/log:/srv/cas/log
     depends_on:
       - cas-mysql
 

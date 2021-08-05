@@ -28,7 +28,7 @@ append :linked_files,
   "docker/cas-web.env"
 
 # Default value for linked_dirs is []
-# append :linked_dirs, "log"
+append :linked_dirs, "log"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -50,5 +50,8 @@ append :linked_files,
 # Default value for docker_compose_volume_files is []
 append :docker_compose_volume_files,
   "config/config.yml",
-  "log/casserver.log",
   "docker/mysql_initdb/0-create_database.sql"
+
+# Required Application log files while run docker container
+# Default value for docker_compose_volume_files is ['log/production.log']
+set :docker_application_log_files, ["log/casserver.log"]

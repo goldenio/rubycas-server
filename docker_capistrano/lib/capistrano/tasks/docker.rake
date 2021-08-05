@@ -78,6 +78,8 @@ namespace :docker do
       set :docker_compose_service, nil
       # Use private docker registry
       set :use_docker_registry, false
+      # Application log files
+      set :docker_application_log_files, ['log/production.log']
     end
 
     desc 'Check directories of files to be uploaded exist in shared'
@@ -153,6 +155,20 @@ namespace :docker do
       on roles([:app, :builder]) do
         files = fetch(:docker_compose_volume_files)
         copy_files_from_shared_to_release(files)
+      end
+    end
+
+    desc 'ensure application log files for run container'
+    task :ensure_application_log_files do
+      on roles([:app]) do
+        files = fetch(:docker_application_log_files)
+        files.each do |file|
+          target_file = shared_path.join(file).to_s
+          if !test(:ls, target_file)
+            execute :touch, target_file
+          end
+          execute :chmod, '666', target_file
+        end
       end
     end
 
@@ -378,6 +394,7 @@ namespace :deploy do
       deploy:started
       deploy:updating
       docker:compose:copy_volume_files
+      docker:compose:ensure_application_log_files
       docker:compose:config
       docker:compose:pull_image
       deploy:updated
