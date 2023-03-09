@@ -76,7 +76,9 @@ namespace :docker do
       set :docker_compose_project, nil
       # Main service name in docker-compose.yml file
       set :docker_compose_service, nil
-      # Use private docker registry
+      # Docker compose command in deploy host
+      set :docker_compose_command, 'docker compose'
+      # Use private docker registry or docker.io registry by REGISTRY_URI
       set :use_docker_registry, false
       # Application log files
       set :docker_application_log_files, ['log/production.log']
@@ -176,11 +178,12 @@ namespace :docker do
     task :config do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app, :builder]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'config')
           end
@@ -192,11 +195,12 @@ namespace :docker do
     task :build_image do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:builder]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'build', service_name)
           end
@@ -209,11 +213,12 @@ namespace :docker do
     task :create_service do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'up', '--no-start', service_name)
           end
@@ -225,11 +230,12 @@ namespace :docker do
     task :remove_service do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'rm', '-f', service_name)
           end
@@ -241,11 +247,12 @@ namespace :docker do
     task :start_service do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'start', service_name)
           end
@@ -257,11 +264,12 @@ namespace :docker do
     task :stop_service do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'stop', service_name)
           end
@@ -273,11 +281,12 @@ namespace :docker do
     task :restart_service do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'restart', service_name)
           end
@@ -289,11 +298,12 @@ namespace :docker do
     task :up_service do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'up', '-d', service_name)
           end
@@ -305,11 +315,12 @@ namespace :docker do
     task :up_no_recreate_service do
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'up', '-d', '--no-recreate', service_name)
           end
@@ -322,11 +333,12 @@ namespace :docker do
       next puts 'Skip push image to private docker registry!' unless fetch(:use_docker_registry)
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:builder]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'push', service_name)
           end
@@ -339,11 +351,12 @@ namespace :docker do
       next puts 'Skip pull image from private docker registry!' unless fetch(:use_docker_registry)
       next puts 'Please set :docker_compose_service first!' unless any? :docker_compose_service
       service_name = fetch(:docker_compose_service)
-      next unless service_name.strip.length.positive?
+      command_name = fetch(:docker_compose_command, 'docker compose')
+      next unless service_name.strip.length.positive? || command_name.strip.length.positive?
       on roles([:app]) do
         within release_path do
           with_sudo_password do
-            execute(:sudo, 'docker-compose',
+            execute(:sudo, command_name,
               '--env-file docker/.env',
               'pull', service_name)
           end

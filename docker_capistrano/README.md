@@ -91,14 +91,14 @@ bundle exec cap production docker:pull_image
 
 ## Dockerize Self
 
-build and run with docker-compose
+build and run with `docker compose`
 
 ``` shell
-docker-compose --env-file .env config
-docker-compose --env-file .env build runner
-docker-compose --env-file .env run --rm runner
-docker-compose --env-file .env push runner
-docker-compose --env-file .env pull runner
+docker compose --env-file .env config
+docker compose --env-file .env build runner
+docker compose --env-file .env run --rm runner
+docker compose --env-file .env push runner
+docker compose --env-file .env pull runner
 ```
 
 build and run with docker

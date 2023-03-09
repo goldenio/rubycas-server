@@ -19,24 +19,24 @@ Please increment docker image version tag in `docker/.env` before you build dock
 ### dev
 
 ``` shell
-docker-compose --env-file docker/.env config
-docker-compose --env-file docker/.env build cas-dev
-docker-compose --env-file docker/.env up cas-dev
-docker-compose --env-file docker/.env start cas-dev
-docker-compose --env-file docker/.env exec cas-dev bundle exec irb
-docker-compose --env-file docker/.env exec cas-dev sh
+docker compose --env-file docker/.env config
+docker compose --env-file docker/.env build cas-dev
+docker compose --env-file docker/.env up cas-dev
+docker compose --env-file docker/.env start cas-dev
+docker compose --env-file docker/.env exec cas-dev bundle exec irb
+docker compose --env-file docker/.env exec cas-dev sh
 open http://127.0.0.1:4000
 ```
 
 ### web
 
 ``` shell
-docker-compose --env-file docker/.env config
-docker-compose --env-file docker/.env build cas-web
-docker-compose --env-file docker/.env up --no-start cas-web
-docker-compose --env-file docker/.env up -d --no-recreate cas-web
-docker-compose --env-file docker/.env exec cas-web bundle exec irb
-docker-compose --env-file docker/.env exec cas-web sh
+docker compose --env-file docker/.env config
+docker compose --env-file docker/.env build cas-web
+docker compose --env-file docker/.env up --no-start cas-web
+docker compose --env-file docker/.env up -d --no-recreate cas-web
+docker compose --env-file docker/.env exec cas-web bundle exec irb
+docker compose --env-file docker/.env exec cas-web sh
 open http://127.0.0.1:6000
 ```
 
