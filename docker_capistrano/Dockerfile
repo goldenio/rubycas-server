@@ -10,13 +10,13 @@ ENV TZ=${tz} \
     LANG=C.UTF-8 \
     LANGUAGE=C.UTF-8
 
-RUN apk add --no-cache tzdata=~2021 \
+RUN apk add --no-cache tzdata=~2022 \
     && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && date \
     && apk add --no-cache \
         openssl=~1.1.1 \
-        git=~2.30 \
+        git=~2 \
     && rm -f /var/cache/apk/*
 
 # ruby_runner stage

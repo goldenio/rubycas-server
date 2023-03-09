@@ -13,7 +13,7 @@ ENV TZ=${tz} \
     LANG=C.UTF-8 \
     LANGUAGE=C.UTF-8
 
-RUN apk add --no-cache tzdata=~2021 \
+RUN apk add --no-cache tzdata=~2022 \
     && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && date \
@@ -35,7 +35,7 @@ RUN apk add --no-cache --virtual .gem-builddeps \
         libxml2-dev=~2.9 \
         libxslt-dev=~1.1 \
     && apk add --no-cache --virtual .ruby-app-devdeps \
-        git=~2.30 \
+        git=~2 \
         # sqlite=~3.34 \
         mysql-client=~10.5 \
     && rm -f /var/cache/apk/*
